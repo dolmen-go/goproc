@@ -1,2 +1,2 @@
-Hello, {{ jsonptr . "/name" }}!
+Hello, {{ . | jsonptr "/name" }}!
 {{/* vim: syntax=gotexttmpl: */ -}}

@@ -56,7 +56,9 @@ func _main() error {
 
 	tmpl := template.New("")
 	tmpl.Funcs(template.FuncMap{
-		"jsonptr": jsonptr.Get,
+		"jsonptr": func(ptr string, doc interface{}) (interface{}, error) {
+			return jsonptr.Get(doc, ptr)
+		},
 	})
 
 	var err error

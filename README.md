@@ -10,7 +10,11 @@ Apply [Go templates](https://golang.org/pkg/text/template/#hdr-Text_and_spaces) 
 
     goproc <Go-template-file> <JSON-or-YAML-file>
 
-## Go template functions extensions
+## Template syntax
+
+See the [Go templates](https://golang.org/pkg/text/template/#hdr-Text_and_spaces) documentation.
+
+## Functions extensions
 
 The following functions are added in addition to the standard functions.
 
@@ -19,9 +23,10 @@ The following functions are added in addition to the standard functions.
 To ease the extraction of data, `jsonptr` allows to express data location using
 JSON Pointer ([RFC 6901](https://tools.ietf.org/html/rfc6901)).
 
-Usage:
+Usages:
 
-    {{ jsonptr . "pointer" }}
+    {{ jsonptr "pointer" . }}
+    {{ . | jsonptr "pointer" }}
 
 Examples:
 

@@ -16,7 +16,7 @@ See the [Go templates](https://golang.org/pkg/text/template/#hdr-Text_and_spaces
 
 ## Functions extensions
 
-The following functions are added in addition to the standard functions.
+The following functions are available in addition to the [standard functions](https://golang.org/pkg/text/template/#hdr-Functions).
 
 ### `jsonptr`
 

@@ -14,6 +14,8 @@ Apply [Go templates](https://golang.org/pkg/text/template/#hdr-Text_and_spaces) 
 
 See the [Go templates](https://golang.org/pkg/text/template/#hdr-Text_and_spaces) documentation.
 
+The [Hugo documentation on Go templates](https://gohugo.io/templates/introduction/) may also be useful for a friendlier approach, but note that it contains references to features unique to Hugo (ex: `partial`).
+
 ## Functions extensions
 
 The following functions are available in addition to the [standard functions](https://golang.org/pkg/text/template/#hdr-Functions).
@@ -32,3 +34,7 @@ Examples:
 
 1. [->template](testdata/02.gotml) [->data](testdata/02.json)
 2. [->template](testdata/03.gotml) [->data](testdata/03.json)
+
+## See also
+
+https://github.com/naotookuda/go-template-cli

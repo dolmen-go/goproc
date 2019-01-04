@@ -32,8 +32,8 @@ Usages:
 
 Examples:
 
-1. [->template](testdata/02.gotml) [->data](testdata/02.json)
-2. [->template](testdata/03.gotml) [->data](testdata/03.json)
+1. `goproc` [`testdata/02.gotmpl`](testdata/02.gotmpl) [`testdata/02.json`](testdata/02.json)
+2. `goproc` [`testdata/03.gotmpl`](testdata/03.gotmpl) [`testdata/03.json`](testdata/03.json)
 
 ## See also
 

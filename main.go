@@ -13,7 +13,7 @@ import (
 
 	"github.com/dolmen-go/flagx"
 	"github.com/dolmen-go/jsonptr"
-	yaml "gopkg.in/yaml.v2"
+	yaml "gopkg.in/yaml.v3"
 )
 
 func main() {
@@ -107,7 +107,6 @@ func loadJSON(r io.Reader) (data interface{}, err error) {
 
 func loadYAML(r io.Reader) (data interface{}, err error) {
 	dec := yaml.NewDecoder(r)
-	dec.SetStrict(true)
 	err = dec.Decode(&data)
 	if err != nil {
 		return nil, err

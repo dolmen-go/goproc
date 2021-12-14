@@ -1,8 +1,14 @@
 github.com/dolmen-go/flagx v0.0.0-20190417133355-9723c2fe277e h1:D+4FgZ7yC1KEqIY6FS4BMpETeDSZ5Xr0MC6ZdYXoKns=
 github.com/dolmen-go/flagx v0.0.0-20190417133355-9723c2fe277e/go.mod h1:fNFjBaYSkHYHlSMSiz7jfNj6/edUlBVjfryEVbLlI2I=
+github.com/dolmen-go/flagx v0.0.0-20210127220802-bf12ea1664d9 h1:N14dVqjXH2p5K9vZ5ScJJapp9Mg0OJvX4DdpJJVV1Qg=
+github.com/dolmen-go/flagx v0.0.0-20210127220802-bf12ea1664d9/go.mod h1:fNFjBaYSkHYHlSMSiz7jfNj6/edUlBVjfryEVbLlI2I=
 github.com/dolmen-go/jsonptr v0.0.0-20190605225012-a9a7ae01cd7d h1:dHAlmt9T9UIIhY6kCyEfVjAT5wutEuwKX/yqm43mEos=
 github.com/dolmen-go/jsonptr v0.0.0-20190605225012-a9a7ae01cd7d/go.mod h1:GG6FAkYtUFD/rqS31kfcho/lSCed6Gqm1X0uiIEU0tA=
+github.com/dolmen-go/jsonptr v0.0.0-20200427210345-20e1608f9d85 h1:UehF9pCOF1JiOLmeZavootTCuimvkW7N1wggjyW4S90=
+github.com/dolmen-go/jsonptr v0.0.0-20200427210345-20e1608f9d85/go.mod h1:+6ZQtcQuiOH4ATMF+4885rhnE3FaM++MhE7m7vM302s=
 gopkg.in/check.v1 v0.0.0-20161208181325-20d25e280405 h1:yhCVgyC4o1eVCa2tZl7eS0r+SDo693bJlVdllGtEeKM=
 gopkg.in/check.v1 v0.0.0-20161208181325-20d25e280405/go.mod h1:Co6ibVJAznAaIkqp8huTwlJQCZ016jof/cbN4VW5Yz0=
 gopkg.in/yaml.v3 v3.0.0-20190502103701-55513cacd4ae h1:ehhBuCxzgQEGk38YjhFv/97fMIc2JGHZAhAWMmEjmu0=
 gopkg.in/yaml.v3 v3.0.0-20190502103701-55513cacd4ae/go.mod h1:K4uyk7z7BCEPqu6E+C64Yfv1cQ7kz7rIZviUmN+EgEM=
+gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b h1:h8qDotaEPuJATrMmW04NCwg7v22aHH28wwpauUhK9Oo=
+gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b/go.mod h1:K4uyk7z7BCEPqu6E+C64Yfv1cQ7kz7rIZviUmN+EgEM=

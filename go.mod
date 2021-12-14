@@ -3,7 +3,7 @@ module github.com/dolmen-go/goproc
 go 1.12
 
 require (
-	github.com/dolmen-go/flagx v0.0.0-20190417133355-9723c2fe277e
-	github.com/dolmen-go/jsonptr v0.0.0-20190605225012-a9a7ae01cd7d
-	gopkg.in/yaml.v3 v3.0.0-20190502103701-55513cacd4ae
+	github.com/dolmen-go/flagx v0.0.0-20210127220802-bf12ea1664d9
+	github.com/dolmen-go/jsonptr v0.0.0-20200427210345-20e1608f9d85
+	gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b
 )

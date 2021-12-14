@@ -29,7 +29,9 @@ func main() {
 func _main() error {
 
 	var templates []string
+	var inlineTemplates []string
 	flag.Var(flagx.Slice(&templates, "", nil), "i", "input template `file`")
+	flag.Var(flagx.Slice(&inlineTemplates, "", nil), "e", "inline template")
 
 	loadData := loadJSON
 	flag.Var(flagx.BoolFunc(func(stdinAsYAML bool) error {
@@ -46,7 +48,7 @@ func _main() error {
 	// TODO handle -version
 
 	args := flag.Args()
-	if len(templates) == 0 {
+	if len(inlineTemplates)+len(templates) == 0 {
 		if len(args) < 1 {
 			return errors.New("missing input template arguments")
 		}
@@ -62,9 +64,23 @@ func _main() error {
 	})
 
 	var err error
-	_, err = tmpl.ParseFiles(templates...)
-	if err != nil {
-		return err
+
+	for _, s := range inlineTemplates {
+		_, err := tmpl.Parse(s)
+		if err != nil {
+			return err
+		}
+	}
+
+	var templateName string
+	if len(templates) > 0 {
+		_, err = tmpl.ParseFiles(templates...)
+		if err != nil {
+			return err
+		}
+		templateName = filepath.Base(templates[0])
+	} else {
+		templateName = tmpl.Name()
 	}
 
 	var data interface{}
@@ -77,7 +93,7 @@ func _main() error {
 		return err
 	}
 
-	return tmpl.ExecuteTemplate(os.Stdout, filepath.Base(templates[0]), data)
+	return tmpl.ExecuteTemplate(os.Stdout, templateName, data)
 }
 
 func loadFile(pth string) (interface{}, error) {

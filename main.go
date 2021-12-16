@@ -58,6 +58,9 @@ func _main() error {
 
 	tmpl := template.New("")
 	tmpl.Funcs(template.FuncMap{
+		"error": func(msg string) string {
+			panic(errors.New(msg))
+		},
 		"jsonptr": func(ptr string, doc interface{}) (interface{}, error) {
 			return jsonptr.Get(doc, ptr)
 		},

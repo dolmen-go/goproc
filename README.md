@@ -20,6 +20,17 @@ The [Hugo documentation on Go templates](https://gohugo.io/templates/introductio
 
 The following functions are available in addition to the [standard functions](https://golang.org/pkg/text/template/#hdr-Functions).
 
+### `error`
+
+Usage:
+
+    {{ error "message" }}
+
+Example:
+
+    echo 0 | goproc -e '{{ error "fail!" }}'
+    template: :1:3: executing "" at <error "fail!">: error calling error: fail!
+
 ### `jsonptr`
 
 To ease the extraction of data, `jsonptr` allows to express data location using

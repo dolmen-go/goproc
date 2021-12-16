@@ -61,6 +61,14 @@ func _main() error {
 		"jsonptr": func(ptr string, doc interface{}) (interface{}, error) {
 			return jsonptr.Get(doc, ptr)
 		},
+		"json": func(doc interface{}) (string, error) {
+			b, err := json.Marshal(doc)
+			return string(b), err
+		},
+		"yaml": func(doc interface{}) (string, error) {
+			b, err := yaml.Marshal(doc)
+			return string(b), err
+		},
 	})
 
 	var err error

@@ -30,10 +30,37 @@ Usages:
     {{ jsonptr "pointer" . }}
     {{ . | jsonptr "pointer" }}
 
+
 Examples:
 
 1. `goproc` [`testdata/02.gotmpl`](testdata/02.gotmpl) [`testdata/02.json`](testdata/02.json)
 2. `goproc` [`testdata/03.gotmpl`](testdata/03.gotmpl) [`testdata/03.json`](testdata/03.json)
+
+### `json`
+
+Convert input to JSON.
+
+Usage:
+
+    {{ json }}
+
+Example:
+
+    echo '{"data": ["x"]}' | goproc -e '{{.data | json}}{{print "\n"}}'
+    ["x"]
+
+### `yaml`
+
+Convert input to YAML.
+
+Usage:
+
+    {{ yaml }}
+
+Example:
+
+    echo '{"data": ["x"]}' | goproc -e '{{.data | yaml}}'
+    - x
 
 ## See also
 

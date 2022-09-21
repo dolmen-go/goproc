@@ -9,9 +9,9 @@ go-version: go.mod $(shell $(go) list -f '{{$$Dir := .Dir}}{{range .GoFiles}}{{$
 go-get:
 	@echo $(go) get $(shell $(go) list .)@$(shell $(MAKE) -f $(firstword $(MAKEFILE_LIST)) go-version)
 
-upgrade-flagx:
+upgrade-flagx: ../flagx/Makefile
 	$(shell $(MAKE) -C ../flagx go-get)
 	$(go) mod tidy
-upgrade-jsonptr:
+upgrade-jsonptr: ../jsonptr/Makefile
 	$(shell $(MAKE) -C ../jsonptr go-get)
 	$(go) mod tidy

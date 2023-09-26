@@ -9,6 +9,7 @@ import (
 	"log"
 	"os"
 	"path/filepath"
+	"strings"
 	"text/template"
 
 	"github.com/dolmen-go/flagx"
@@ -30,8 +31,10 @@ func _main() error {
 
 	var templates []string
 	var inlineTemplates []string
+	var withEnv bool
 	flag.Var(flagx.Slice(&templates, "", nil), "i", "input template `file`")
 	flag.Var(flagx.Slice(&inlineTemplates, "", nil), "e", "inline template")
+	flag.BoolVar(&withEnv, "env", false, "enable env function")
 
 	loadData := loadJSON
 	flag.Var(flagx.BoolFunc(func(stdinAsYAML bool) error {
@@ -57,7 +60,7 @@ func _main() error {
 	}
 
 	tmpl := template.New("")
-	tmpl.Funcs(template.FuncMap{
+	funcs := template.FuncMap{
 		"error": func(msg string) string {
 			panic(errors.New(msg))
 		},
@@ -72,7 +75,45 @@ func _main() error {
 			b, err := yaml.Marshal(doc)
 			return string(b), err
 		},
-	})
+	}
+
+	if withEnv {
+		funcs["env"] = func(names ...string) interface{} {
+			switch len(names) {
+			case 0:
+				envNative := os.Environ()
+				env := make(map[string]string, len(envNative))
+				for _, v := range envNative {
+					p := strings.IndexByte(v, '=')
+					if p == -1 {
+						continue
+					}
+					env[v[:p]] = v[p+1:]
+				}
+				return env
+			case 1:
+				return os.Getenv(names[0])
+			default:
+				envNative := os.Environ()
+				env := make(map[string]string, len(envNative))
+				for _, v := range envNative {
+					p := strings.IndexByte(v, '=')
+					if p == -1 {
+						continue
+					}
+					n := v[:p]
+					for _, name := range names {
+						if name == n {
+							env[name] = v[p+1:]
+						}
+					}
+				}
+				return env
+			}
+		}
+	}
+
+	tmpl.Funcs(funcs)
 
 	var err error
 

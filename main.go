@@ -9,6 +9,7 @@ import (
 	"log"
 	"os"
 	"path/filepath"
+	"slices"
 	"strings"
 	"text/template"
 
@@ -31,10 +32,33 @@ func _main() error {
 
 	var templates []string
 	var inlineTemplates []string
-	var withEnv bool
+	// nil => env disabled
+	// []string{} => all variables allowed, but listing them is disabled
+	// []string{"name1","name2"} => only "name1" and "name2" are visible
+	var envKeys []string
 	flag.Var(flagx.Slice(&templates, "", nil), "i", "input template `file`")
 	flag.Var(flagx.Slice(&inlineTemplates, "", nil), "e", "inline template")
-	flag.BoolVar(&withEnv, "env", false, "enable env function")
+	flag.BoolFunc("env", "enable access to environment variables (with optional whitelist) via env function", func(s string) error {
+		// fmt.Fprintf(os.Stderr, "%q\n", s)
+		switch s {
+		// -env=
+		case "":
+			envKeys = []string{} // empty but not nil
+			return nil
+		// -env
+		case "true":
+			if envKeys == nil {
+				envKeys = []string{} // empty but not nil
+			}
+			return nil
+		// -env=name1,name2
+		default:
+			keys := strings.Split(s, ",")
+			envKeys = append(envKeys, keys...)
+			slices.Sort(envKeys)
+			return nil
+		}
+	})
 
 	loadData := loadJSON
 	flag.Var(flagx.BoolFunc(func(stdinAsYAML bool) error {
@@ -77,23 +101,15 @@ func _main() error {
 		},
 	}
 
-	if withEnv {
-		funcs["env"] = func(names ...string) interface{} {
+	// Add 'env' function if -env flag was given
+	if envKeys != nil {
+		funcs["env"] = func(names ...string) (any, error) {
 			switch len(names) {
 			case 0:
-				envNative := os.Environ()
-				env := make(map[string]string, len(envNative))
-				for _, v := range envNative {
-					p := strings.IndexByte(v, '=')
-					if p == -1 {
-						continue
-					}
-					env[v[:p]] = v[p+1:]
+				// Keys must be whitelisted with -env=name1,name2
+				if len(envKeys) == 0 {
+					return nil, fmt.Errorf("no environment variable has been whitelisted (use -env=name1,name2)")
 				}
-				return env
-			case 1:
-				return os.Getenv(names[0])
-			default:
 				envNative := os.Environ()
 				env := make(map[string]string, len(envNative))
 				for _, v := range envNative {
@@ -102,13 +118,40 @@ func _main() error {
 						continue
 					}
 					n := v[:p]
+					// Check if present in whitelist
+					if slices.Contains(envKeys, n) {
+						env[n] = v[p+1:]
+					}
+				}
+				return env, nil
+			case 1:
+				name := names[0]
+				if len(envKeys) > 0 && !slices.Contains(envKeys, name) {
+					return nil, fmt.Errorf("environment variable %q is not whitelisted (use -env=name1,name2)", name)
+				}
+				return os.Getenv(name), nil
+			default:
+				if len(envKeys) > 0 {
+					// Check if requested keys are in whitelist
 					for _, name := range names {
-						if name == n {
-							env[name] = v[p+1:]
+						if !slices.Contains(envKeys, name) {
+							return nil, fmt.Errorf("environment variable %q is not whitelisted", name)
 						}
 					}
 				}
-				return env
+				envNative := os.Environ()
+				env := make(map[string]string, len(envNative))
+				for _, v := range envNative {
+					p := strings.IndexByte(v, '=')
+					if p == -1 {
+						continue
+					}
+					n := v[:p]
+					if slices.Contains(names, n) {
+						env[n] = v[p+1:]
+					}
+				}
+				return env, nil
 			}
 		}
 	}

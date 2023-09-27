@@ -1,6 +1,6 @@
 module github.com/dolmen-go/goproc
 
-go 1.19
+go 1.21
 
 require (
 	github.com/dolmen-go/flagx v0.0.0-20220905084811-0f631a62d7bd

@@ -20,6 +20,23 @@ The [Hugo documentation on Go templates](https://gohugo.io/templates/introductio
 
 The following functions are available in addition to the [standard functions](https://golang.org/pkg/text/template/#hdr-Functions).
 
+### `env`
+
+This function must be explicitely enabled using the `-env` flag:
+
+* `-env`: enables the `env` function. Any environment variable can be used, but listing variables is blocked.
+* `-env=`: enables the `env` function, but whitelist of allowed variables is cleared (no variables allowed).
+* `-env=name1,name2`: enables the `env` function. Only the variables `name1` and `name2` are visible in calls to `env`.
+
+Usage:
+
+    {{ env "HOME" }}     {{- /* Get value of HOME environment variable */}}
+    {{ "HOME" | env }}   {{- /* Get value of HOME environment variable */}}
+    {{ range $name, $value := env "HOME" "LANG" -}}
+      {{ $name }}={{ $value }}
+    {{ end }}
+
+
 ### `error`
 
 Usage:

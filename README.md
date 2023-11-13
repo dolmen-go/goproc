@@ -2,13 +2,20 @@
 
 Apply [Go templates](https://golang.org/pkg/text/template/#hdr-Text_and_spaces) to JSON or YAML data.
 
-## Build
+## Install
 
-    go build
+    go install github.com/dolmen-go/goproc@latest
 
 ## Usage
 
-    goproc <Go-template-file> <JSON-or-YAML-file>
+    goproc [ -env | -env=true | -env=VAR ] -i <Go-template-file> [ <JSON-or-YAML-file> ]
+    goproc [ -env | -env=true | -env=VAR ] -e <Go-template-text> [ <JSON-or-YAML-file> ]
+
+The default input is STDIN in JSON format. Use `-yaml` flag to handle STDIN as YAML.
+
+When an input file is given, the file extension determines if it is parsed as JSON or YAML.
+
+In any case there is no magic detection (that usually lead to security issues).
 
 ## Template syntax
 
@@ -19,6 +26,23 @@ The [Hugo documentation on Go templates](https://gohugo.io/templates/introductio
 ## Functions extensions
 
 The following functions are available in addition to the [standard functions](https://golang.org/pkg/text/template/#hdr-Functions).
+
+### `env`
+
+This function must be explicitely enabled using the `-env` flag:
+
+* `-env`: enables the `env` function. Any environment variable can be used, but listing variables is blocked.
+* `-env=`: enables the `env` function, but whitelist of allowed variables is cleared (no variables allowed).
+* `-env=name1,name2`: enables the `env` function. Only the variables `name1` and `name2` are visible in calls to `env`.
+
+Usage:
+
+    {{ env "HOME" }}     {{- /* Get value of HOME environment variable */}}
+    {{ "HOME" | env }}   {{- /* Get value of HOME environment variable */}}
+    {{ range $name, $value := env "HOME" "LANG" -}}
+      {{ $name }}={{ $value }}
+    {{ end }}
+
 
 ### `error`
 

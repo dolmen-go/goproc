@@ -2,13 +2,20 @@
 
 Apply [Go templates](https://golang.org/pkg/text/template/#hdr-Text_and_spaces) to JSON or YAML data.
 
-## Build
+## Install
 
-    go build
+    go install github.com/dolmen-go/goproc@latest
 
 ## Usage
 
-    goproc <Go-template-file> <JSON-or-YAML-file>
+    goproc [ -env | -env=true | -env=VAR ] -i <Go-template-file> [ <JSON-or-YAML-file> ]
+    goproc [ -env | -env=true | -env=VAR ] -e <Go-template-text> [ <JSON-or-YAML-file> ]
+
+The default input is STDIN in JSON format. Use `-yaml` flag to handle STDIN as YAML.
+
+When an input file is given, the file extension determines if it is parsed as JSON or YAML.
+
+In any case there is no magic detection (that usually lead to security issues).
 
 ## Template syntax
 

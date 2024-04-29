@@ -29,7 +29,7 @@ The following functions are available in addition to the [standard functions](ht
 
 ### `env`
 
-Allow to use environment variables (with security proctections).
+Allow to use environment variables, with security protections.
 
 This function must be explicitely enabled using the `-env` flag:
 

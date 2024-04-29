@@ -8,8 +8,8 @@ Apply [Go templates](https://golang.org/pkg/text/template/#hdr-Text_and_spaces) 
 
 ## Usage
 
-    goproc [ -env | -env=true | -env=VAR ] -i <Go-template-file> [ <JSON-or-YAML-file> ]
     goproc [ -env | -env=true | -env=VAR ] -e <Go-template-text> [ <JSON-or-YAML-file> ]
+    goproc [ -env | -env=true | -env=VAR ] -i <Go-template-file> [ <JSON-or-YAML-file> ]
 
 The default input is STDIN in JSON format. Use `-yaml` flag to handle STDIN as YAML.
 
@@ -28,6 +28,8 @@ The [Hugo documentation on Go templates](https://gohugo.io/templates/introductio
 The following functions are available in addition to the [standard functions](https://golang.org/pkg/text/template/#hdr-Functions).
 
 ### `env`
+
+Allow to use environment variables (with security proctections).
 
 This function must be explicitely enabled using the `-env` flag:
 
